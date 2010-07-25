@@ -34,17 +34,28 @@ abstract class ORM_MPTT extends ORM
 	 **/
 	public $scope_column = 'scope';
 
+
 	/**
-	 * @access public
-	 * @var string path column name.
-	 **/
+	 * Enable/Disable path calculation
+	 *
+	 */
+	protected $path_calculation_enabled = FALSE;
+
+	/**
+	 * Full pre-calculated path
+	 *
+	 */
 	public $path_column = 'path';
 
 	/**
-	 * @access public
-	 * @var string path column name.
-	 **/
+	 * Single path element
+	 */
 	public $path_part_column = 'path_part';
+
+	/**
+	 * Path separator
+	 */
+	public $path_separator = '/';
 
 	/**
 	 * New scope
@@ -96,7 +107,7 @@ abstract class ORM_MPTT extends ORM
 		else if ($lock['l']->l == 1)
 			return $this; // Success
 		else
-			throw new Exception('Unable to obtain MPTT lock'); // Unknown Error
+			throw new Exception('Unable to obtain MPTT lock'); // Unknown Error handle this.. better
 	}
 
 	/**
@@ -402,10 +413,12 @@ abstract class ORM_MPTT extends ORM
 		$this->create_space($this->{$this->left_column});
 
 		parent::save();
-		
-		$this->update_path();
 
-		parent::save();
+		if ($this->path_calculation_enabled)
+		{
+			$this->update_path();
+			parent::save();
+		}
 
 		$this->unlock();
 
@@ -651,9 +664,12 @@ abstract class ORM_MPTT extends ORM
 
 		$this->delete_space($this->{$this->left_column}, $size);
 
-		$this->update_path();
 
-		parent::save();
+		if ($this->path_calculation_enabled)
+		{
+			$this->update_path();
+			parent::save();
+		}
 		
 		$this->unlock();
 
@@ -765,12 +781,12 @@ abstract class ORM_MPTT extends ORM
 
 		foreach ($parents as $parent)
 		{
-			$path .= '/' . trim($parent->{$this->path_part_column});
+			$path .= $this->path_separator . trim($parent->{$this->path_part_column});
 		}
 
-		$path .= '/' . trim($this->{$this->path_part_column});
+		$path .= $this->path_separator . trim($this->{$this->path_part_column});
 
-		$path = trim($path, '/');
+		$path = trim($path, $this->path_separator);
 
 		$this->{$this->path_column} = $path;
 
