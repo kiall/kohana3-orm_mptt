@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+	<table name="test_orm_mptt">
+		<column>id</column>
+		<column>lft</column>
+		<column>rgt</column>
+		<column>lvl</column>
+		<column>scope</column>
+		<column>path</column>
+		<column>path_part</column>
+		<column>description</column>
+		<row>
+			<value>1</value><!-- ID -->
+			<value>1</value><!-- lft -->
+			<value>10</value><!-- rgt -->
+			<value>1</value><!-- lvl -->
+			<value>1</value><!-- scope -->
+			<null /><!-- path -->
+			<null /><!-- path_part -->
+			<value>Root Node, Scope 1</value><!--description -->
+		</row>
+		<row>
+			<value>2</value><!-- ID -->
+			<value>2</value><!-- lft -->
+			<value>3</value><!-- rgt -->
+			<value>2</value><!-- lvl -->
+			<value>1</value><!-- scope -->
+			<value>nodeID2</value><!-- path -->
+			<value>nodeID2</value><!-- path_part -->
+			<value>Leaf node, Child of Root</value><!--description -->
+		</row>
+		<row>
+			<value>3</value><!-- ID -->
+			<value>4</value><!-- lft -->
+			<value>9</value><!-- rgt -->
+			<value>2</value><!-- lvl -->
+			<value>1</value><!-- scope -->
+			<value>nodeID3</value><!-- path -->
+			<value>nodeID3</value><!-- path_part -->
+			<value>Child of Root</value><!--description -->
+		</row>
+		<row>
+			<value>4</value><!-- ID -->
+			<value>5</value><!-- lft -->
+			<value>8</value><!-- rgt -->
+			<value>3</value><!-- lvl -->
+			<value>1</value><!-- scope -->
+			<value>nodeID3/nodeID4</value><!-- path -->
+			<value>nodeID4</value><!-- path_part -->
+			<value>Child of nodeID 3</value><!--description -->
+		</row>
+		<row>
+			<value>5</value><!-- ID -->
+			<value>6</value><!-- lft -->
+			<value>7</value><!-- rgt -->
+			<value>4</value><!-- lvl -->
+			<value>1</value><!-- scope -->
+			<value>nodeID3/nodeID4/nodeID5</value><!-- path -->
+			<value>nodeID5</value><!-- path_part -->
+			<value>Child of nodeID3/nodeID4</value><!--description -->
+		</row>
+	</table>
+</dataset>
